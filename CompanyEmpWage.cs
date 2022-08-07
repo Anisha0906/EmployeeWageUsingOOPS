@@ -12,22 +12,30 @@ namespace EmployeeWageProblemUsingOops
         public readonly int wagePerHour;
         public readonly int maxWorkingDays;
         public readonly int maxWorkingHours;
-        int wagesPerMonth = 0;
-
+        public int wagesPerMonth = 0;
+         public int dailyWage = 0;
          public CompanyEmpWage(string companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours)
         {
-            this.companyName = companyName;
+             this.companyName = companyName;
             this.wagePerHour = wagePerHour;
             this.maxWorkingDays = maxWorkingDays;
             this.maxWorkingHours = maxWorkingHours;
         }
-        public void setWagesPerMonth(int wagesPerMonth)
+         public void setWagesPerMonth(int wagesPerMonth)
         {
             this.wagesPerMonth = wagesPerMonth;
         }
-        public void printMonthlyWage()
+        public void setDailyWage(int dailyWage)
         {
-            Console.WriteLine($"Wages for the company {companyName} for the month : {wagesPerMonth}");
+            this.dailyWage = dailyWage;
+        }
+         public void printMonthlyWage()
+        {
+             Console.WriteLine($"Wages for the company {companyName} for the month : {wagesPerMonth}");
+        }
+         public void printDailyWage()
+        {
+            Console.WriteLine($"Daily Wage for the company {companyName} : {dailyWage}");
         }
     }
 }

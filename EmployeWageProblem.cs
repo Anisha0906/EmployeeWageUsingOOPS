@@ -9,30 +9,31 @@ namespace EmployeeWageProblem
     class EmployeWageProblem : IComputeEmpWage
 
     {
-         public int FULL_DAY_HOUR = 8;
+        public int FULL_DAY_HOUR = 8;
         public int PART_TIME_HOUR = 4;
         const int EMP_FULL_TIME = 1;
         const int EMP_PART_TIME = 2;
          ArrayList companies;
-        int noOfCompanies;
          public EmployeWageProblem()
         {
-             companies = new ArrayList();
+            companies = new ArrayList();
         }
          public void AddCompany(string companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours)
         {
-             CompanyEmpWage company = new CompanyEmpWage(companyName, wagePerHour, maxWorkingDays, maxWorkingHours);
+            CompanyEmpWage company = new CompanyEmpWage(companyName, wagePerHour, maxWorkingDays, maxWorkingHours);
+            company.setDailyWage(this.ComputeDailyWage(company));
             company.setWagesPerMonth(this.ComputeMonthlyWage(company));
             companies.Add(company);
-         }
-         public void AddCompany(CompanyEmpWage company)
+          }
+        public void AddCompany(CompanyEmpWage company)
         {
+            company.setDailyWage(this.ComputeDailyWage(company));
             company.setWagesPerMonth(this.ComputeMonthlyWage(company));
             companies.Add(company);
         }
          public int ComputeMonthlyWage(CompanyEmpWage company)
         {
-             int workingHours = 0;
+            int workingHours = 0;
             int workingDays = 0;
             int wagesPerMonth = 0;
             int attendance;
@@ -47,7 +48,7 @@ namespace EmployeeWageProblem
                         workingDays += 1; 
                         empHrs = FULL_DAY_HOUR;  
                         break;
-                     case EMP_PART_TIME:
+                    case EMP_PART_TIME:
                         workingDays += 1; 
                         empHrs = PART_TIME_HOUR; 
                         break;
@@ -55,17 +56,34 @@ namespace EmployeeWageProblem
                         break;
                 }
                 workingHours += empHrs;
-                 wagesPerMonth += (company.wagePerHour * workingHours);
+                wagesPerMonth += (company.wagePerHour * workingHours);
 
             }
             return wagesPerMonth;
         } 
-
-        public void DisplayCompanyWages()
+        public int ComputeDailyWage(CompanyEmpWage company)
+        {
+            return FULL_DAY_HOUR * company.wagePerHour;
+        }
+         public void DisplayCompanyWages()
         {
             foreach (CompanyEmpWage company in companies)
             {
                 company.printMonthlyWage();
+            }
+        }
+        public void DisplayCompanyMonthlyWages()
+        {
+            foreach (CompanyEmpWage company in companies)
+            {
+                company.printMonthlyWage();  
+            }
+        }
+        public void DisplayCompanyDailyWages()
+        {
+            foreach (CompanyEmpWage company in companies)
+            {
+                company.printDailyWage();  
             }
         }
     }

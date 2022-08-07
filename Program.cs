@@ -18,6 +18,7 @@ namespace EmployeeWageProblemUsingOops
             empWageBuilder.AddCompany("Infoys", 20, 2, 10);
             empWageBuilder.AddCompany("Google", 20, 2, 10);
             empWageBuilder.DisplayCompanyWages();
+            empWageBuilder.DisplayCompanyDailyWages();
             Console.ReadKey();
         }
 
