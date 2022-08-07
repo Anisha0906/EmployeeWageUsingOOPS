@@ -1,55 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace EmployeeWageProblemUsingOops
+namespace EmployeeWageProblem
 {
-    class EmployeWageProblem
+    public class EmpWageBuilderObject
     {
         const int Emp_Full_Time = 1;
         const int Emp_Part_Time = 2;
-         public int Working_Days_Per_Month = 20;
-        public int Working_Days = 0;
-        public int empHrs = 0;
-        public int EmployeeWage = 0;
-        int totalWage = 0;
-        int totalHours = 0;
-        public void Attendance(string CompanyName, int WagePerHour, int NumWorkingDays, int MaxHoursPerMonth) //
-        {
-            for (int Day = 1; Day <= Working_Days_Per_Month; Day++)
-            {
-                Random random = new Random(); 
+        private string CompanyName;
+        private int WagePerHour;
+        private int NumWorkingDays;
+        private int MaxHoursPerMonth;
+        private int totalWage;
 
-                int empCheck = random.Next(0, 3); 
-                switch (empCheck) 
+        public EmpWageBuilderObject(string CompanyName, int WagePerHour, int NumWorkingDays, int MaxHoursPerMonth)
+        {
+            this.CompanyName = CompanyName;
+            this.WagePerHour = WagePerHour;
+            this.NumWorkingDays = NumWorkingDays;
+            this.MaxHoursPerMonth = MaxHoursPerMonth;
+        }
+        public void Attendance()
+        {
+
+            int DailyWage = 0;
+            int days, isPresent;
+            int totalHours = 0;
+            Random rand = new Random();
+            for (days = 1; days <= this.NumWorkingDays; days++) 
+            {
+                isPresent = rand.Next(0, 3);
+                 switch (isPresent)
                 {
                     case Emp_Full_Time: 
-                        empHrs = WagePerHour * 8;
-                        break;
-
+                        {
+                            DailyWage = this.WagePerHour * 8;
+                            break;
+                        }
                     case Emp_Part_Time: 
-                        empHrs = WagePerHour * 4; 
-                        break;
-
-                    default:
-                        empHrs = 0; 
-                        break;
+                        {
+                            DailyWage = this.WagePerHour * 4;
+                            break;
+                        }
+                    default: 
+                        {
+                            DailyWage = isPresent;
+                            break;
+                        }
                 }
-
-               totalHours += empHrs / 20; 
-                totalWage += empHrs; 
-                if (totalHours >= MaxHoursPerMonth) 
+                totalHours += DailyWage / 20; 
+                totalWage += DailyWage; 
+                if (totalHours >= this.MaxHoursPerMonth)  
                     break;
             }
+            Console.WriteLine();
+            Console.WriteLine($"Company Name :{this.CompanyName}"); 
+            Console.WriteLine($"No. of hours worked :{totalHours}"); 
+            Console.WriteLine($"Wage Per hour :{this.WagePerHour}"); 
+            Console.WriteLine($"Monthly wage :{this.totalWage}");
+        }
 
-            Console.WriteLine();
-            Console.WriteLine("Company Name :" + CompanyName);
-            Console.WriteLine("Number Of Hour Employee  Worked  :" + totalHours);
-            Console.WriteLine("Employee Wage Per Hour :" + WagePerHour);
-            Console.WriteLine("Monthly wage :" + totalWage);
-            Console.WriteLine();
+        public string Result()
+        {
+           return "Total Employee wage for Comapny : " + this.CompanyName + " is " + this.totalWage;
         }
     }
 }
