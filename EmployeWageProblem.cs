@@ -10,39 +10,46 @@ namespace EmployeeWageProblemUsingOops
     {
         const int Emp_Full_Time = 1;
         const int Emp_Part_Time = 2;
-        public int Count_Work_Day = 20;
-        public int Emp_Per_Rate_Hour = 20;
-        public int MAx_Hrs_Or_Day_Month = 100;
+         public int Working_Days_Per_Month = 20;
         public int Working_Days = 0;
         public int empHrs = 0;
         public int EmployeeWage = 0;
-        public int EmpSalary;
-        public void Attendance()
+        int totalWage = 0;
+        int totalHours = 0;
+        public void Attendance(string CompanyName, int WagePerHour, int NumWorkingDays, int MaxHoursPerMonth) //
         {
-            while (empHrs <= MAx_Hrs_Or_Day_Month && Working_Days < Count_Work_Day)  
+            for (int Day = 1; Day <= Working_Days_Per_Month; Day++)
             {
-                Working_Days++; 
                 Random random = new Random(); 
+
                 int empCheck = random.Next(0, 3); 
                 switch (empCheck) 
                 {
-                    case Emp_Full_Time:
-                        empHrs = 8; 
+                    case Emp_Full_Time: 
+                        empHrs = WagePerHour * 8;
                         break;
 
                     case Emp_Part_Time: 
-                        empHrs = 4; 
+                        empHrs = WagePerHour * 4; 
                         break;
 
                     default:
                         empHrs = 0; 
                         break;
                 }
-                EmployeeWage += empHrs; 
-                Console.WriteLine("Day#:" + Working_Days + "Employee Hrs:" + empHrs);
+
+               totalHours += empHrs / 20; 
+                totalWage += empHrs; 
+                if (totalHours >= MaxHoursPerMonth) 
+                    break;
             }
-            EmpSalary = EmployeeWage + Emp_Per_Rate_Hour; 
-            Console.WriteLine("Employee Wage : " + EmployeeWage); 
+
+            Console.WriteLine();
+            Console.WriteLine("Company Name :" + CompanyName);
+            Console.WriteLine("Number Of Hour Employee  Worked  :" + totalHours);
+            Console.WriteLine("Employee Wage Per Hour :" + WagePerHour);
+            Console.WriteLine("Monthly wage :" + totalWage);
+            Console.WriteLine();
         }
     }
 }

@@ -12,7 +12,8 @@ namespace EmployeeWageProblemUsingOops
         {
             Console.WriteLine("Welcome to Employee Wage Computation Program");
             EmployeWageProblem EmployeeWage = new EmployeWageProblem();
-            EmployeeWage.Attendance();
+            EmployeeWage.Attendance("DMart", 20, 2, 10);
+            EmployeeWage.Attendance("BigBazar", 10, 4, 20);
             Console.ReadKey();
         }
     }
