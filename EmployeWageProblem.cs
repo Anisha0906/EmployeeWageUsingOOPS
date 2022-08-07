@@ -1,69 +1,72 @@
-﻿using System;
+﻿using EmployeeWageProblemUsingOops;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EmployeeWageProblem
 {
-    public class EmpWageBuilderObject
+       class EmployeWageProblem
+
     {
-        const int Emp_Full_Time = 1;
-        const int Emp_Part_Time = 2;
-        private string CompanyName;
-        private int WagePerHour;
-        private int NumWorkingDays;
-        private int MaxHoursPerMonth;
-        private int totalWage;
-
-        public EmpWageBuilderObject(string CompanyName, int WagePerHour, int NumWorkingDays, int MaxHoursPerMonth)
+         public int FULL_DAY_HOUR = 8;
+        public int PART_TIME_HOUR = 4;
+        const int EMP_FULL_TIME = 1;
+        const int EMP_PART_TIME = 2;
+        CompanyEmpWage[] companies;
+        int noOfCompanies;
+          public EmployeWageProblem()
         {
-            this.CompanyName = CompanyName;
-            this.WagePerHour = WagePerHour;
-            this.NumWorkingDays = NumWorkingDays;
-            this.MaxHoursPerMonth = MaxHoursPerMonth;
+          companies = new CompanyEmpWage[10];
+                       noOfCompanies = 0;
         }
-        public void Attendance()
+          public void AddCompany(string companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours)
         {
-
-            int DailyWage = 0;
-            int days, isPresent;
-            int totalHours = 0;
+            CompanyEmpWage company = new CompanyEmpWage(companyName, wagePerHour, maxWorkingDays, maxWorkingHours);
+            company.setWagesPerMonth(this.ComputeMonthlyWage(company));
+            companies[noOfCompanies] = company;
+            noOfCompanies++;
+        }
+            public void AddCompany(CompanyEmpWage company)
+        {
+            company.setWagesPerMonth(this.ComputeMonthlyWage(company));
+            companies[noOfCompanies] = company;
+            noOfCompanies++;
+        }
+        public int ComputeMonthlyWage(CompanyEmpWage company)
+        {
+            int workingHours = 0;
+            int workingDays = 0;
+            int wagesPerMonth = 0;
+            int attendance;
+            int empHrs = 0;
             Random rand = new Random();
-            for (days = 1; days <= this.NumWorkingDays; days++) 
+            while (workingHours < company.maxWorkingHours && workingDays < company.maxWorkingDays)
             {
-                isPresent = rand.Next(0, 3);
-                 switch (isPresent)
+                attendance = rand.Next(0, 3); 
+                switch (attendance)
                 {
-                    case Emp_Full_Time: 
-                        {
-                            DailyWage = this.WagePerHour * 8;
-                            break;
-                        }
-                    case Emp_Part_Time: 
-                        {
-                            DailyWage = this.WagePerHour * 4;
-                            break;
-                        }
-                    default: 
-                        {
-                            DailyWage = isPresent;
-                            break;
-                        }
+                    case EMP_FULL_TIME:
+                        workingDays += 1; 
+                        empHrs = FULL_DAY_HOUR; 
+                        break;
+                    case EMP_PART_TIME:
+                        workingDays += 1; 
+                        empHrs = PART_TIME_HOUR;
+                        break;
+                    default:
+                        break;
                 }
-                totalHours += DailyWage / 20; 
-                totalWage += DailyWage; 
-                if (totalHours >= this.MaxHoursPerMonth)  
-                    break;
+                workingHours += empHrs;
+               wagesPerMonth += (company.wagePerHour * workingHours);
+
             }
-            Console.WriteLine();
-            Console.WriteLine($"Company Name :{this.CompanyName}"); 
-            Console.WriteLine($"No. of hours worked :{totalHours}"); 
-            Console.WriteLine($"Wage Per hour :{this.WagePerHour}"); 
-            Console.WriteLine($"Monthly wage :{this.totalWage}");
+            return wagesPerMonth;
+        } 
+          public void DisplayCompanyWages()
+        {
+            for (int Display_i = 0; Display_i < noOfCompanies; Display_i++)
+                companies[Display_i].printMonthlyWage();
         }
 
-        public string Result()
-        {
-           return "Total Employee wage for Comapny : " + this.CompanyName + " is " + this.totalWage;
-        }
     }
 }

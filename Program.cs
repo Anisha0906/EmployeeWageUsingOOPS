@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmployeeWageProblem;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +12,15 @@ namespace EmployeeWageProblemUsingOops
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Employee Wage Computation Program");
-            EmployeeWageProblem.EmpWageBuilderObject DMart = new EmployeeWageProblem.EmpWageBuilderObject("DMart", 20, 2, 10);
-            EmployeeWageProblem.EmpWageBuilderObject BigBazar = new EmployeeWageProblem.EmpWageBuilderObject("BigBazar", 10, 4, 20);
-            DMart.Attendance();
-            Console.WriteLine(DMart.Result());
-            BigBazar.Attendance();
-            Console.WriteLine(BigBazar.Result());
+            EmployeWageProblem empWageBuilder = new EmployeWageProblem();
+           empWageBuilder.AddCompany("TCS", 20, 2, 10);
+            empWageBuilder.AddCompany("TATA", 20, 2, 10);
+            empWageBuilder.AddCompany("Infoys", 20, 2, 10);
+            empWageBuilder.AddCompany("Google", 20, 2, 10);
+            empWageBuilder.DisplayCompanyWages();
             Console.ReadKey();
         }
+
+
     }
 }
